@@ -185,3 +185,11 @@ SupportServerSection:Button({
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/SYNb/refs/heads/main/%E6%B1%89%E5%8C%96%E7%89%88%E5%BC%80%E5%B1%B1.lua"))()
 	end,
 })
+
+SupportServerSection:Button({
+	Title = "TTK枪战服务器",
+	Color = Grey,
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/jjb/refs/heads/main/TT%E6%B5%8B%E8%AF%95.lua"))()
+	end,
+})
