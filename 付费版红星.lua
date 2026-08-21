@@ -1,2 +1,199 @@
--- This file is protected by goofyscator V10 BETA-2.1 >> goofyscator.lua.cz <<
-return ({["h"]=(function(w,WnR,Tnk)local Ymd,Xg0,__k,Onj=WnR[0x83B],Tnk[6],(((Tnk[9] or 0xDA9E5) - 0xDA9E5) * 0x62BEB) % 0xFFFFD,WnR[0xA07];local zzO,_zI=Xg0[3],Xg0[1];local A;do local Tev=zzO;local Ucf,W=Tev[0x3770] or 0x4656,Tev[0x7020] or 0;if Ucf == 0x7A13 then A=Ymd[W];elseif Ucf == 0x53EA then A=W;elseif Ucf == 399 then local JtO=Tev[0x248B];if JtO == nil then w.n=w.AHC.bxor(((W + 0x6AD5) * 529 + (w.Vz or 0) + (w.Ub or 0)) % 0x10000,0x7D70);w.P=((W + ((((Tnk[9] or 0xDA9E5) - 0xDA9E5) * 0x62BEB) % 0xFFFFD) + (w.Vz or 0)) % 4);JtO=WnR[0x229E][W];w.n=nil;if JtO == w.YJz then Tev[0x248B]=w.YJz;A=nil;else Tev[0x248B]=JtO == nil and w.YJz or JtO;A=JtO;end;elseif JtO == w.YJz then A=nil;else A=JtO;end;elseif Ucf == 0x6D3B then local etS=Tev[0x248B];if etS == nil then w.n=w.AHC.bxor(((W + 0x6AD5) * 529 + (w.Vz or 0) + (w.Ub or 0)) % 0x10000,0x7D70);w.P=((W + ((((Tnk[9] or 0xDA9E5) - 0xDA9E5) * 0x62BEB) % 0xFFFFD) + (w.Vz or 0)) % 4);etS=WnR[0x229E][W];w.n=nil;if etS == w.YJz then Tev[0x248B]=w.YJz;A=nil;else Tev[0x248B]=etS == nil and w.YJz or etS;A=etS;end;elseif etS == w.YJz then A=nil;else A=etS;end;else A=nil;end;end;local q;do local Eep=_zI;local C,ruG=Eep[0x7020] or 0,Eep[0x3770] or 0x4656;if ruG == 0x7A13 then q=Ymd[C];elseif ruG == 0x53EA then q=C;elseif ruG == 399 then local ztn=Eep[0x248B];if ztn == nil then w.n=w.AHC.bxor(((C + 0x6AD5) * 529 + (w.Vz or 0) + (w.Ub or 0)) % 0x10000,0x7D70);w.P=((C + ((((Tnk[9] or 0xDA9E5) - 0xDA9E5) * 0x62BEB) % 0xFFFFD) + (w.Vz or 0)) % 4);ztn=WnR[0x229E][C];w.n=nil;if ztn == w.YJz then Eep[0x248B]=w.YJz;q=nil;else Eep[0x248B]=ztn == nil and w.YJz or ztn;q=ztn;end;elseif ztn == w.YJz then q=nil;else q=ztn;end;elseif ruG == 0x6D3B then local Dty=Eep[0x248B];if Dty == nil then w.n=w.AHC.bxor(((C + 0x6AD5) * 529 + (w.Vz or 0) + (w.Ub or 0)) % 0x10000,0x7D70);w.P=((C + ((((Tnk[9] or 0xDA9E5) - 0xDA9E5) * 0x62BEB) % 0xFFFFD) + (w.Vz or 0)) % 4);Dty=WnR[0x229E][C];w.n=nil;if Dty == w.YJz then Eep[0x248B]=w.YJz;q=nil;else Eep[0x248B]=Dty == nil and w.YJz or Dty;q=Dty;end;elseif Dty == w.YJz then q=nil;else q=Dty;end;else q=nil;end;end;local woT=Tnk[3];if type(woT) ~= "number" then local kgj=(w.F)(w,woT or "",1) or 0;woT=w.AHC.bxor(kgj,0x23BF);Tnk[3]=woT;end;local L;if woT == 0x31C2 then L=A == q;elseif woT == 0xBE6 then L=A ~= q;elseif woT == 0x6CCB then L=A > q;elseif woT == 0x79DA then L=A >= q;elseif woT == 0x4397 then L=A < q;elseif woT == 0x698E then L=A <= q;elseif woT == 0x827 then L=A + q;elseif woT == 0x3AD6 then L=A - q;elseif woT == 0x6222 then L=A * q;elseif woT == 0x2C05 then L=A / q;elseif woT == 0x40BD then local hl3,vrH=type(A),type(q);if (hl3 == "number" or hl3 == "string") and (vrH == "number" or vrH == "string") then L=math.floor(A / q);else local rl4=getmetatable(A);local thE=type(rl4) == "table" and rawget(rl4,"__idiv") or nil;if thE == nil then local brR=getmetatable(q);thE=type(brR) == "table" and rawget(brR,"__idiv") or nil;end;L=thE ~= nil and thE(A,q) or math.floor(A / q);end;elseif woT == 0x6A0B then L=A % q;elseif woT == 0x1ED7 then L=A ^ q;elseif woT == 0x7BCF then L=A .. q;elseif woT == 0x16C6 then L=A and q;elseif woT == 0x29ED then L=A or q;end;do local iyB,Esl=L,__k;Ymd[Esl]=iyB;local pbA=Onj and Onj[Esl];if pbA then pbA[1]=iyB;end;end;end),["E"]=(function(rr,Gde,Wmr)local Uxe,nyG,x_b,Anq=Wmr[6],Gde[0x83B],(((Wmr[9] or 0xDA9E5) - 0xDA9E5) * 0x62BEB) % 0xFFFFD,Gde[0xA07];local z_g=Uxe[3];local bed;do local UeT=z_g;local Pml,Q=UeT[0x3770] or 0x4656,UeT[0x7020] or 0;if Pml == 0x7A13 then bed=nyG[Q];elseif Pml == 0x53EA then bed=Q;elseif Pml == 399 then local XtI=UeT[0x248B];if XtI == nil then rr.n=rr.AHC.bxor(((Q + 0x6AD5) * 529 + (rr.Vz or 0) + (rr.Ub or 0)) % 0x10000,0x7D70);rr.P=((Q + ((((Wmr[9] or 0xDA9E5) - 0xDA9E5) * 0x62BEB) % 0xFFFFD) + (rr.Vz or 0)) % 4);XtI=Gde[0x229E][Q];rr.n=nil;if XtI == rr.YJz then UeT[0x248B]=rr.YJz;bed=nil;else UeT[0x248B]=XtI == nil and rr.YJz or XtI;bed=XtI;end;elseif XtI == rr.YJz then bed=nil;else bed=XtI;end;elseif Pml == 0x6D3B then local ZtN=UeT[0x248B];if ZtN == nil then rr.n=rr.AHC.bxor(((Q + 0x6AD5) * 529 + (rr.Vz or 0) + (rr.Ub or 0)) % 0x10000,0x7D70);rr.P=((Q + ((((Wmr[9] or 0xDA9E5) - 0xDA9E5) * 0x62BEB) % 0xFFFFD) + (rr.Vz or 0)) % 4);ZtN=Gde[0x229E][Q];rr.n=nil;if ZtN == rr.YJz then UeT[0x248B]=rr.YJz;bed=nil;else UeT[0x248B]=ZtN == nil and rr.YJz or ZtN;bed=ZtN;end;elseif ZtN == rr.YJz then bed=nil;else bed=ZtN;end;else bed=nil;end;end;do local syK,Tsu=bed,x_b;nyG[Tsu]=syK;local vbO=Anq and Anq[Tsu];if vbO then vbO[1]=syK;end;end;end),["wEwt"]=(function(Yx5,bbI)return bbI[8] or {};end),["z"]=(function(saA,Xit,Cra)local Kjg,dl5=saA.EIVN,saA.S;local gbN,Zg1=Kjg(saA,Xit,(((Cra[6] or {})[3] or {}))),Xit[0x67E4];local Vmu=Zg1[gbN];if Vmu == saA.YJz then dl5(saA,Xit,(((Cra[9] or 0xDA9E5) - 0xDA9E5) * 0x62BEB) % 0xFFFFD,nil);elseif Vmu ~= nil then dl5(saA,Xit,(((Cra[9] or 0xDA9E5) - 0xDA9E5) * 0x62BEB) % 0xFFFFD,Vmu);elseif gbN == "limitedstack" then dl5(saA,Xit,(((Cra[9] or 0xDA9E5) - 0xDA9E5) * 0x62BEB) % 0xFFFFD,true);elseif Zg1 ~= saA.lr then dl5(saA,Xit,(((Cra[9] or 0xDA9E5) - 0xDA9E5) * 0x62BEB) % 0xFFFFD,nil);else dl5(saA,Xit,(((Cra[9] or 0xDA9E5) - 0xDA9E5) * 0x62BEB) % 0xFFFFD,saA.DZ[gbN]);end;end),["phZ"]=(function(tsL,hyQ,ll6)local Qjk,Jjq=tsL.S,tsL.EIVN;local ul7=ll6[3];if type(ul7) ~= "number" then local Spc=(tsL.F)(tsL,ul7 or "",1) or 0;ul7=tsL.AHC.bxor(Spc,0x5F9C);ll6[3]=ul7;end;local Kfi=(((ll6[6] or {})[3] or {}));if ul7 % 2 == 1 then Kfi=(((ll6[6] or {})[1] or {}));end;Qjk(tsL,hyQ,(((ll6[9] or 0xDA9E5) - 0xDA9E5) * 0x62BEB) % 0xFFFFD,Jjq(tsL,hyQ,Kfi));end),["mj"]=(function(Px6,qgx,cl8)return qgx[0x83B][cl8];end),["ud"]=(function(TT,DD,asU)local Xjj,Zia,Bmc,kbS=TT.k,(TT.DZ.table and TT.DZ.table.unpack) or TT.DZ.unpack,TT.mj,TT.S;if not Zia then Zia=(function(ml9,ahT,Gmm)ahT=ahT or 1;Gmm=Gmm or #ml9;if ahT > Gmm then return;end;return ml9[ahT],Zia(ml9,ahT + 1,Gmm);end);end;local ff,E,haO,S,z=(((((asU[6] or {})[3] or {})))[0x7020] or 0),asU[3],asU[0x3829],(((((asU[6] or {})[1] or {})))[0x7020] or 0),(((asU[9] or 0xDA9E5) - 0xDA9E5) * 0x62BEB) % 0xFFFFD;if type(E) ~= "number" then local KnF,fue=1,E or "";E,KnF=(TT.nXoq)(TT,fue,KnF);E=E or -1;local xti;xti,KnF=(TT.F)(TT,fue,KnF);if type(xti) == "number" and xti > 0 then haO=xti;end;asU[3]=E;asU[0x3829]=haO;end;local raI=Bmc(TT,DD,z);local Inx=TT.wlGo and TT.wlGo[raI];if raI == nil then local Mro="attempt to call a nil value";if type(haO) == "number" and haO > 0 then Mro="script:" .. tostring(haO) .. ": " .. Mro;end;error(Mro,0);end;if not Inx and ff >= 0 and ff <= 3 and S >= 0 and S <= 3 then local Nnz,XX=DD[0xA07],DD[0x83B];local function qbH(Asc,ryJ)XX[Asc]=ryJ;local jbR=Nnz and Nnz[Asc];if jbR then jbR[1]=ryJ;end;end;if S == 0 then if ff == 0 then raI();elseif ff == 1 then raI(XX[z + 1]);elseif ff == 2 then raI(XX[z + 1],XX[z + 2]);else raI(XX[z + 1],XX[z + 2],XX[z + 3]);end;DD[0x62A1]=z - 1;return;end;local xbD,zbL,_b
+-- 红星中心 | WindUI Script
+local RunService = game:GetService("RunService")
+local cloneref = (cloneref or clonereference or function(instance)
+	return instance
+end)
+local ReplicatedStorage = cloneref(game:GetService("ReplicatedStorage"))
+local HttpService = cloneref(game:GetService("HttpService"))
+
+local Whitelist = {
+	"jjb1169",
+	"ugvjjuyf",
+	"tpi_io",
+	"MKQoew51",
+	"m0NESY114514",
+	"FFH_001",
+	"Jamsswi",
+	"zyz_z020",
+	"qin1478",
+	"thHV121",
+	"jjsz2211",
+	"zds19299124683",
+	"jay798777",
+	"jay798000",
+}
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+if not table.find(Whitelist, LocalPlayer.Name) then
+	warn("[红星中心] 你没有权限使用此脚本！")
+	if not RunService:IsStudio() then
+		LocalPlayer:Kick("你没有权限使用红星中心")
+	else
+		print("[红星中心] 当前玩家 '" .. LocalPlayer.Name .. "' 不在白名单中")
+	end
+	return
+end
+
+local WindUI
+
+do
+	local ok, result = pcall(function()
+		return require("./src/Init")
+	end)
+
+	if ok then
+		WindUI = result
+	else
+		if cloneref(game:GetService("RunService")):IsStudio() then
+			WindUI = require(cloneref(ReplicatedStorage:WaitForChild("WindUI"):WaitForChild("Init")))
+		else
+			WindUI =
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
+		end
+	end
+end
+
+local Red = Color3.fromHex("#FF3B30")
+local Yellow = Color3.fromHex("#FFD60A")
+local Grey = Color3.fromHex("#83889E")
+local Blue = Color3.fromHex("#00BFFF")
+
+local Window = WindUI:CreateWindow({
+	Title = "红星中心",
+	Folder = "RedStarHub",
+	Icon = "solar:folder-2-bold-duotone",
+	NewElements = true,
+	HideSearchBar = false,
+
+	OpenButton = {
+		Title = "打开红星中心",
+		CornerRadius = UDim.new(1, 0),
+		StrokeThickness = 3,
+		Enabled = true,
+		Draggable = true,
+		OnlyMobile = false,
+		Scale = 0.8,
+
+		Color = ColorSequence.new(Red, Color3.fromHex("#FFD60A")),
+	},
+
+	Topbar = {
+		Height = 44,
+		ButtonsType = "Mac",
+	},
+})
+
+Window:Tag({
+	Title = "红星中心 v" .. WindUI.Version,
+	Icon = "github",
+	Color = Red,
+	Border = true,
+})
+
+local HomeTab = Window:Tab({
+	Title = "首页",
+	Desc = "欢迎使用红星中心",
+	Icon = "solar:info-square-bold",
+	IconColor = Red,
+	IconShape = "Square",
+	Border = true,
+})
+
+local HomeSection = HomeTab:Section({
+	Title = "红星中心",
+})
+
+HomeSection:Section({
+	Title = "欢迎使用红星中心付费版",
+	TextSize = 22,
+	FontWeight = Enum.FontWeight.SemiBold,
+})
+
+local ServerTab = Window:Tab({
+	Title = "服务器",
+	Desc = "服务器功能",
+	Icon = "solar:folder-2-bold-duotone",
+	IconColor = Red,
+	IconShape = "Square",
+	Border = true,
+})
+
+local ServerSection = ServerTab:Section({
+	Title = "服务器功能",
+})
+
+ServerSection:Button({
+	Title = "重新加入服务器",
+	Color = Red,
+	Callback = function()
+		local ts = game:GetService("TeleportService")
+		local placeId = game.PlaceId
+		ts:Teleport(placeId, LocalPlayer)
+	end,
+})
+
+ServerSection:Button({
+	Title = "复制服务器 ID",
+	Color = Yellow,
+	Callback = function()
+		setclipboard(game.JobId)
+	end,
+})
+
+ServerSection:Button({
+	Title = "显示服务器信息",
+	Color = Grey,
+	Callback = function()
+		print("服务器 ID:", game.JobId)
+		print("地点 ID:", game.PlaceId)
+		print("玩家数:", #Players:GetPlayers())
+		print("最大玩家数:", Players.MaxPlayers)
+	end,
+})
+
+local SupportServerTab = Window:Tab({
+	Title = "支持服务器",
+	Desc = "支持的服务器脚本",
+	Icon = "solar:folder-2-bold-duotone",
+	IconColor = Red,
+	IconShape = "Square",
+	Border = true,
+})
+
+local SupportServerSection = SupportServerTab:Section({
+	Title = "支持的服务器",
+})
+
+SupportServerSection:Button({
+	Title = "最坚强的战场",
+	Color = Red,
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/Good/refs/heads/main/%E6%9C%80%E5%9D%9A%E5%BC%BA"))()
+	end,
+})
+
+SupportServerSection:Button({
+	Title = "采集一座山",
+	Color = Yellow,
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/SYNb/refs/heads/main/%E6%B1%89%E5%8C%96%E7%89%88%E5%BC%80%E5%B1%B1.lua"))()
+	end,
+})
+
+SupportServerSection:Button({
+	Title = "TTK枪战服务器",
+	Color = Grey,
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/jjb/refs/heads/main/TT%E6%B5%8B%E8%AF%95.lua"))()
+	end,
+})
+
+SupportServerSection:Button({
+	Title = "神奇一击",
+	Color = Blue,
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/SYNb/refs/heads/main/%E7%A5%9E%E5%A5%87.lua"))()
+	end,
+})
