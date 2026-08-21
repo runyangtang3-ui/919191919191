@@ -1,4 +1,4 @@
--- 红星中心 | WindUI Script（白名单系统 + 首页 + 服务器 + 支持服务器）
+-- 红星中心 | WindUI Script
 local RunService = game:GetService("RunService")
 local cloneref = (cloneref or clonereference or function(instance)
 	return instance
@@ -6,34 +6,29 @@ end)
 local ReplicatedStorage = cloneref(game:GetService("ReplicatedStorage"))
 local HttpService = cloneref(game:GetService("HttpService"))
 
--- // 白名单系统
 local Whitelist = {
-	"jjb1169", -- 你的名字
-	"ugvjjuyf", -- 白名单
-	"tpi_io", -- 白名单
-	"MKQoew51", -- 白名单
-	"m0NESY114514", -- 白名单
-	"FFH_001", -- 白名单
-	"Jamsswi", -- 白名单
-	"zyz_z020", -- 白名单
-	-- 在这里添加更多白名单玩家，例如：
-	-- "玩家名字2",
-	-- "玩家名字3",
+	"jjb1169",
+	"ugvjjuyf",
+	"tpi_io",
+	"MKQoew51",
+	"m0NESY114514",
+	"FFH_001",
+	"Jamsswi",
+	"zyz_z020",
+	"qin1478",
 }
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
--- 检查当前玩家是否在白名单中
 if not table.find(Whitelist, LocalPlayer.Name) then
-	-- 不在白名单中，提示并停止脚本
 	warn("[红星中心] 你没有权限使用此脚本！")
 	if not RunService:IsStudio() then
 		LocalPlayer:Kick("你没有权限使用红星中心")
 	else
 		print("[红星中心] 当前玩家 '" .. LocalPlayer.Name .. "' 不在白名单中")
 	end
-	return -- 停止执行
+	return
 end
 
 local WindUI
@@ -55,12 +50,10 @@ do
 	end
 end
 
--- // 颜色
 local Red = Color3.fromHex("#FF3B30")
 local Yellow = Color3.fromHex("#FFD60A")
 local Grey = Color3.fromHex("#83889E")
 
--- // 主窗口
 local Window = WindUI:CreateWindow({
 	Title = "红星中心",
 	Folder = "RedStarHub",
@@ -86,7 +79,6 @@ local Window = WindUI:CreateWindow({
 	},
 })
 
--- // 版本标签
 Window:Tag({
 	Title = "红星中心 v" .. WindUI.Version,
 	Icon = "github",
@@ -94,7 +86,6 @@ Window:Tag({
 	Border = true,
 })
 
--- // 首页 Tab
 local HomeTab = Window:Tab({
 	Title = "首页",
 	Desc = "欢迎使用红星中心",
@@ -114,7 +105,6 @@ HomeSection:Section({
 	FontWeight = Enum.FontWeight.SemiBold,
 })
 
--- // 服务器 Tab
 local ServerTab = Window:Tab({
 	Title = "服务器",
 	Desc = "服务器功能",
@@ -157,7 +147,6 @@ ServerSection:Button({
 	end,
 })
 
--- // 支持服务器 Tab
 local SupportServerTab = Window:Tab({
 	Title = "支持服务器",
 	Desc = "支持的服务器脚本",
