@@ -18,6 +18,7 @@ local Whitelist = {
 	"qin1478",
 	"thHV121",
 	"jjsz2211",
+	"zds19299124683",
 }
 
 local Players = game:GetService("Players")
