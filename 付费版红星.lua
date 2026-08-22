@@ -21,10 +21,11 @@ local Whitelist = {
 	"zds19299124683",
 	"jay798777",
 	"jay798000",
+	"honikml",
 	"THQngedqx",
-	"gxy1yl",
-	"xuzhiyong2065",
 	"rydtyrscvvh",
+	"xuzhiyong2065",
+	"mount rng",
 }
 
 local Players = game:GetService("Players")
@@ -62,7 +63,8 @@ end
 local Red = Color3.fromHex("#FF3B30")
 local Yellow = Color3.fromHex("#FFD60A")
 local Grey = Color3.fromHex("#83889E")
-local Blue = Color3.fromHex("#00BFFF")
+local Blue = Color3.fromHex("#257AF7")
+local Green = Color3.fromHex("#10C550")
 
 local Window = WindUI:CreateWindow({
 	Title = "红星中心",
@@ -195,8 +197,16 @@ SupportServerSection:Button({
 })
 
 SupportServerSection:Button({
-	Title = "神奇一击",
+	Title = "CS go",
 	Color = Blue,
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/Good/refs/heads/main/%E5%A4%A9%E7%BD%A1.lua"))()
+	end,
+})
+
+SupportServerSection:Button({
+	Title = "神奇一击无冷却",
+	Color = Green,
 	Callback = function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/SYNb/refs/heads/main/%E7%A5%9E%E5%A5%87.lua"))()
 	end,
