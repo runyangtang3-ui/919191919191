@@ -27,6 +27,7 @@ local Whitelist = {
 	"xuzhiyong2065",
 	"mount rng",
 	"zyb_d7344",
+	"jkl345839",
 }
 
 local Players = game:GetService("Players")
