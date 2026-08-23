@@ -66,6 +66,7 @@ local Yellow = Color3.fromHex("#FFD60A")
 local Grey = Color3.fromHex("#83889E")
 local Blue = Color3.fromHex("#257AF7")
 local Green = Color3.fromHex("#10C550")
+local Purple = Color3.fromHex("#7775F2")
 
 local Window = WindUI:CreateWindow({
 	Title = "红星中心",
@@ -210,5 +211,13 @@ SupportServerSection:Button({
 	Color = Green,
 	Callback = function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/SYNb/refs/heads/main/%E7%A5%9E%E5%A5%87.lua"))()
+	end,
+})
+
+SupportServerSection:Button({
+	Title = "狙击竞技场",
+	Color = Purple,
+	Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/Good/refs/heads/main/%E7%8B%99%E5%87%BB%E7%AB%9E%E6%8A%80%E5%9C%BA.lua"))()
 	end,
 })
