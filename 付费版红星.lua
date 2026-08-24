@@ -42,6 +42,15 @@ if not table.find(Whitelist, LocalPlayer.Name) then
 	return
 end
 
+-- 自动播放音乐
+local function playAutoMusic()
+	local sound = Instance.new("Sound")
+	sound.SoundId = "rbxassetid://109693244185458"
+	sound.Parent = game:GetService("SoundService")
+	sound:Play()
+end
+
+-- 先加载 WindUI，用于弹窗
 local WindUI
 
 do
@@ -68,224 +77,179 @@ local Blue = Color3.fromHex("#257AF7")
 local Green = Color3.fromHex("#10C550")
 local Purple = Color3.fromHex("#7775F2")
 
-local Window = WindUI:CreateWindow({
-	Title = "红星中心",
-	Folder = "RedStarHub",
-	Icon = "solar:folder-2-bold-duotone",
-	NewElements = true,
-	HideSearchBar = false,
+-- 先弹通知，点击确定后再创建窗口并播放音乐
+local confirmed = false
 
-	OpenButton = {
-		Title = "打开红星中心",
-		CornerRadius = UDim.new(1, 0),
-		StrokeThickness = 3,
-		Enabled = true,
-		Draggable = true,
-		OnlyMobile = false,
-		Scale = 0.8,
-
-		Color = ColorSequence.new(Red, Color3.fromHex("#FFD60A")),
-	},
-
-	Topbar = {
-		Height = 44,
-		ButtonsType = "Mac",
+WindUI:Popup({
+	Title = "欢迎 " .. LocalPlayer.Name,
+	Content = "欢迎使用红星中心付费版",
+	Buttons = {
+		{
+			Title = "确定",
+			Variant = "Primary",
+			Callback = function()
+				confirmed = true
+				playAutoMusic() -- 点击确定后自动播放音乐
+				createMainWindow()
+			end,
+		},
 	},
 })
 
-Window:Tag({
-	Title = "红星中心 v" .. WindUI.Version,
-	Icon = "github",
-	Color = Red,
-	Border = true,
-})
+function createMainWindow()
+	if not confirmed then return end
 
-local HomeTab = Window:Tab({
-	Title = "首页",
-	Desc = "欢迎使用红星中心",
-	Icon = "solar:info-square-bold",
-	IconColor = Red,
-	IconShape = "Square",
-	Border = true,
-})
+	local Window = WindUI:CreateWindow({
+		Title = "红星中心",
+		Folder = "RedStarHub",
+		Icon = "solar:folder-2-bold-duotone",
+		NewElements = true,
+		HideSearchBar = false,
 
-local HomeSection = HomeTab:Section({
-	Title = "红星中心",
-})
+		OpenButton = {
+			Title = "hx 打开红星中心",
+			CornerRadius = UDim.new(1, 0),
+			StrokeThickness = 3,
+			Enabled = true,
+			Draggable = true,
+			OnlyMobile = false,
+			Scale = 0.8,
 
-HomeSection:Section({
-	Title = "欢迎使用红星中心付费版",
-	TextSize = 22,
-	FontWeight = Enum.FontWeight.SemiBold,
-})
+			Color = ColorSequence.new(Red, Color3.fromHex("#FFD60A")),
+		},
 
-local ServerTab = Window:Tab({
-	Title = "服务器",
-	Desc = "服务器功能",
-	Icon = "solar:folder-2-bold-duotone",
-	IconColor = Red,
-	IconShape = "Square",
-	Border = true,
-})
+		Topbar = {
+			Height = 44,
+			ButtonsType = "Mac",
+		},
+	})
 
-local ServerSection = ServerTab:Section({
-	Title = "服务器功能",
-})
+	Window:Tag({
+		Title = "红星中心 v" .. WindUI.Version,
+		Icon = "github",
+		Color = Red,
+		Border = true,
+	})
 
-ServerSection:Button({
-	Title = "重新加入服务器",
-	Color = Red,
-	Callback = function()
-		local ts = game:GetService("TeleportService")
-		local placeId = game.PlaceId
-		ts:Teleport(placeId, LocalPlayer)
-	end,
-})
+	local HomeTab = Window:Tab({
+		Title = "首页",
+		Desc = "欢迎使用红星中心",
+		Icon = "solar:info-square-bold",
+		IconColor = Red,
+		IconShape = "Square",
+		Border = true,
+	})
 
-ServerSection:Button({
-	Title = "复制服务器 ID",
-	Color = Yellow,
-	Callback = function()
-		setclipboard(game.JobId)
-	end,
-})
+	local HomeSection = HomeTab:Section({
+		Title = "红星中心",
+	})
 
-ServerSection:Button({
-	Title = "显示服务器信息",
-	Color = Grey,
-	Callback = function()
-		print("服务器 ID:", game.JobId)
-		print("地点 ID:", game.PlaceId)
-		print("玩家数:", #Players:GetPlayers())
-		print("最大玩家数:", Players.MaxPlayers)
-	end,
-})
+	HomeSection:Section({
+		Title = "欢迎使用红星中心付费版",
+		TextSize = 22,
+		FontWeight = Enum.FontWeight.SemiBold,
+	})
 
-local SupportServerTab = Window:Tab({
-	Title = "支持服务器",
-	Desc = "支持的服务器脚本",
-	Icon = "solar:folder-2-bold-duotone",
-	IconColor = Red,
-	IconShape = "Square",
-	Border = true,
-})
+	local ServerTab = Window:Tab({
+		Title = "服务器",
+		Desc = "服务器功能",
+		Icon = "solar:folder-2-bold-duotone",
+		IconColor = Red,
+		IconShape = "Square",
+		Border = true,
+	})
 
-local SupportServerSection = SupportServerTab:Section({
-	Title = "支持的服务器",
-})
+	local ServerSection = ServerTab:Section({
+		Title = "服务器功能",
+	})
 
-SupportServerSection:Button({
-	Title = "最坚强的战场",
-	Color = Red,
-	Callback = function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/Good/refs/heads/main/%E6%9C%80%E5%9D%9A%E5%BC%BA"))()
-	end,
-})
+	ServerSection:Button({
+		Title = "重新加入服务器",
+		Color = Red,
+		Callback = function()
+			local ts = game:GetService("TeleportService")
+			local placeId = game.PlaceId
+			ts:Teleport(placeId, LocalPlayer)
+		end,
+	})
 
-SupportServerSection:Button({
-	Title = "采集一座山",
-	Color = Yellow,
-	Callback = function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/SYNb/refs/heads/main/%E6%B1%89%E5%8C%96%E7%89%88%E5%BC%80%E5%B1%B1.lua"))()
-	end,
-})
+	ServerSection:Button({
+		Title = "复制服务器 ID",
+		Color = Yellow,
+		Callback = function()
+			setclipboard(game.JobId)
+		end,
+	})
 
-SupportServerSection:Button({
-	Title = "TTK枪战服务器",
-	Color = Grey,
-	Callback = function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/jjb/refs/heads/main/TT%E6%B5%8B%E8%AF%95.lua"))()
-	end,
-})
+	ServerSection:Button({
+		Title = "显示服务器信息",
+		Color = Grey,
+		Callback = function()
+			print("服务器 ID:", game.JobId)
+			print("地点 ID:", game.PlaceId)
+			print("玩家数:", #Players:GetPlayers())
+			print("最大玩家数:", Players.MaxPlayers)
+		end,
+	})
 
-SupportServerSection:Button({
-	Title = "CS go",
-	Color = Blue,
-	Callback = function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/Good/refs/heads/main/%E5%A4%A9%E7%BD%A1.lua"))()
-	end,
-})
+	local SupportServerTab = Window:Tab({
+		Title = "支持服务器",
+		Desc = "支持的服务器脚本",
+		Icon = "solar:folder-2-bold-duotone",
+		IconColor = Red,
+		IconShape = "Square",
+		Border = true,
+	})
 
-SupportServerSection:Button({
-	Title = "神奇一击无冷却",
-	Color = Green,
-	Callback = function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/SYNb/refs/heads/main/%E7%A5%9E%E5%A5%87.lua"))()
-	end,
-})
+	local SupportServerSection = SupportServerTab:Section({
+		Title = "支持的服务器",
+	})
 
-SupportServerSection:Button({
-	Title = "狙击竞技场",
-	Color = Purple,
-	Callback = function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/Good/refs/heads/main/%E7%8B%99%E5%87%BB%E7%AB%9E%E6%8A%80%E5%9C%BA.lua"))()
-	end,
-})
+	SupportServerSection:Button({
+		Title = "最坚强的战场",
+		Color = Red,
+		Callback = function()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/Good/refs/heads/main/%E6%9C%80%E5%9D%9A%E5%BC%BA"))()
+		end,
+	})
 
-local MusicTab = Window:Tab({
-	Title = "音乐",
-	Desc = "音乐播放器",
-	Icon = "solar:folder-2-bold-duotone",
-	IconColor = Red,
-	IconShape = "Square",
-	Border = true,
-})
+	SupportServerSection:Button({
+		Title = "采集一座山",
+		Color = Yellow,
+		Callback = function()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/SYNb/refs/heads/main/%E6%B1%89%E5%8C%96%E7%89%88%E5%BC%80%E5%B1%B1.lua"))()
+		end,
+	})
 
-local MusicSection = MusicTab:Section({
-	Title = "音乐播放器",
-})
+	SupportServerSection:Button({
+		Title = "TTK枪战服务器",
+		Color = Grey,
+		Callback = function()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/jjb/refs/heads/main/TT%E6%B5%8B%E8%AF%95.lua"))()
+		end,
+	})
 
-local currentSound = nil
+	SupportServerSection:Button({
+		Title = "CS go",
+		Color = Blue,
+		Callback = function()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/Good/refs/heads/main/%E5%A4%A9%E7%BD%A1.lua"))()
+		end,
+	})
 
-local function playMusic(id)
-	if currentSound then
-		currentSound:Stop()
-		currentSound:Destroy()
-	end
-	currentSound = Instance.new("Sound")
-	currentSound.SoundId = "rbxassetid://" .. id
-	currentSound.Parent = game:GetService("SoundService")
-	currentSound:Play()
+	SupportServerSection:Button({
+		Title = "神奇一击无冷却",
+		Color = Green,
+		Callback = function()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/SYNb/refs/heads/main/%E7%A5%9E%E5%A5%87.lua"))()
+		end,
+	})
+
+	SupportServerSection:Button({
+		Title = "狙击竞技场",
+		Color = Purple,
+		Callback = function()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/runyangtang3-ui/Good/refs/heads/main/%E7%8B%99%E5%87%BB%E7%AB%9E%E6%8A%80%E5%9C%BA.lua"))()
+		end,
+	})
 end
-
-MusicSection:Button({
-	Title = "搜索音乐ID播放",
-	Color = Blue,
-	Callback = function()
-		local dialog = Window:Dialog({
-			Title = "输入音乐ID",
-			Content = "请输入要播放的音乐ID",
-			Input = {
-				Placeholder = "音乐ID",
-			},
-			Buttons = {
-				{
-					Title = "播放",
-					Variant = "Primary",
-					Callback = function(input)
-						local id = tonumber(input)
-						if id then
-							playMusic(id)
-						end
-					end,
-				},
-				{
-					Title = "取消",
-					Variant = "Tertiary",
-				},
-			},
-		})
-	end,
-})
-
-MusicSection:Button({
-	Title = "停止播放",
-	Color = Red,
-	Callback = function()
-		if currentSound then
-			currentSound:Stop()
-			currentSound:Destroy()
-			currentSound = nil
-		end
-	end,
-})
