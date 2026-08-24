@@ -1,3 +1,6 @@
+已添加“音乐”标签页，包含搜索播放、停止功能，以及你提供的所有音乐列表。
+
+```lua
 -- 红星中心 | WindUI Script
 local RunService = game:GetService("RunService")
 local cloneref = (cloneref or clonereference or function(instance)
@@ -301,6 +304,7 @@ local MusicList = {
 	{id = "96590819329722", name = "会呼吸的痛"},
 	{id = "125615482496831", name = "青衣"},
 	{id = "114476517052805", name = "铡美案"},
+	{id = "114476517052805", name = "铡美案"},
 	{id = "138765729162919", name = "蜜雪"},
 	{id = "128967751535556", name = "nig"},
 	{id = "84348087757554", name = "嘉豪"},
@@ -454,4 +458,3 @@ for _, music in ipairs(MusicList) do
 		end,
 	})
 end
-
