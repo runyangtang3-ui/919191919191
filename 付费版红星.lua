@@ -1,6 +1,3 @@
-已添加“音乐”标签页，包含搜索播放、停止功能，以及你提供的所有音乐列表。
-
-```lua
 -- 红星中心 | WindUI Script
 local RunService = game:GetService("RunService")
 local cloneref = (cloneref or clonereference or function(instance)
