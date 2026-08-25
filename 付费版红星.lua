@@ -27,9 +27,6 @@ local Whitelist = {
 	"xuzhiyong2065",
 	"mount rng",
 	"zyb_d7344",
-	"danweizhanchang6",
-	"dxywzzs",
-	"821109qwe",
 }
 
 local Players = game:GetService("Players")
@@ -85,7 +82,7 @@ local confirmed = false
 
 WindUI:Popup({
 	Title = "欢迎 " .. LocalPlayer.Name,
-	Content = "欢迎使用红星中心付费版",
+	Content = "欢迎使用红星中心付费版\n制作者：霸天",
 	Buttons = {
 		{
 			Title = "确定",
