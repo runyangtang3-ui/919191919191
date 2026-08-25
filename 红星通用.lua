@@ -29,84 +29,6 @@ local LocalPlayer = Players.LocalPlayer
 local Camera = workspace.CurrentCamera
 local UserInputService = game:GetService("UserInputService")
 
--- ==================== 自定义滑块模块 ====================
-local function CreateSlider(parent, title, min, max, default, callback)
-    local container = Instance.new("Frame")
-    container.Size = UDim2.new(1, -20, 0, 40)
-    container.BackgroundTransparency = 1
-    container.Parent = parent
-
-    local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(1, 0, 0, 20)
-    label.Position = UDim2.new(0, 0, 0, 0)
-    label.BackgroundTransparency = 1
-    label.Text = title .. ": " .. tostring(default)
-    label.TextColor3 = Color3.new(1, 1, 1)
-    label.Font = Enum.Font.SourceSans
-    label.TextSize = 14
-    label.Parent = container
-
-    local bar = Instance.new("Frame")
-    bar.Size = UDim2.new(1, -10, 0, 8)
-    bar.Position = UDim2.new(0, 5, 0, 25)
-    bar.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-    bar.BorderSizePixel = 0
-    Instance.new("UICorner", bar).CornerRadius = UDim.new(0, 4)
-    bar.Parent = container
-
-    local fill = Instance.new("Frame")
-    local fillWidth = (default - min) / (max - min)
-    fill.Size = UDim2.new(fillWidth, 0, 1, 0)
-    fill.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
-    fill.BorderSizePixel = 0
-    Instance.new("UICorner", fill).CornerRadius = UDim.new(0, 4)
-    fill.Parent = bar
-
-    local knob = Instance.new("TextButton")
-    knob.Size = UDim2.new(0, 16, 0, 16)
-    knob.Position = UDim2.new(fillWidth, -8, 0, -4)
-    knob.BackgroundColor3 = Color3.new(1, 1, 1)
-    knob.Text = ""
-    knob.BorderSizePixel = 0
-    Instance.new("UICorner", knob).CornerRadius = UDim.new(1, 0)
-    knob.Parent = bar
-
-    local dragging = false
-    local function updateFromMouse()
-        local mouse = LocalPlayer:GetMouse()
-        local barAbs = bar.AbsolutePosition
-        local barSize = bar.AbsoluteSize
-        local relativeX = math.clamp(mouse.X - barAbs.X, 0, barSize.X)
-        local percent = relativeX / barSize.X
-        local value = min + percent * (max - min)
-        callback(value)
-        label.Text = title .. ": " .. math.floor(value)
-        fill.Size = UDim2.new(percent, 0, 1, 0)
-        knob.Position = UDim2.new(percent, -8, 0, -4)
-    end
-
-    knob.MouseButton1Down:Connect(function()
-        dragging = true
-        updateFromMouse()
-    end)
-    bar.MouseButton1Down:Connect(function()
-        dragging = true
-        updateFromMouse()
-    end)
-    UserInputService.InputEnded:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            dragging = false
-        end
-    end)
-    UserInputService.InputChanged:Connect(function(input)
-        if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement) then
-            updateFromMouse()
-        end
-    end)
-
-    return container
-end
-
 -- ==================== 变量定义 ====================
 -- 速度
 local TargetWalkSpeed = 16
@@ -146,7 +68,7 @@ function SetSpeedEnabled(enabled)
 end
 
 function SetSpeedValue(value)
-    TargetWalkSpeed = math.clamp(value, 0, 400)
+    TargetWalkSpeed = math.clamp(value, 16, 400)
     if SpeedEnabled then
         local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
         if hum then
@@ -535,8 +457,8 @@ LocalPlayer.CharacterAdded:Connect(function()
 end)
 -- ==================== 自瞄功能 ====================
 local AimEnabled = false
-local AimFOV = 100
-local AimSmoothness = 8
+local AimFOV = 100            -- 实际像素半径（内部使用）
+local AimSmoothness = 8       -- 实际平滑度（内部使用）
 local AimVisibleOnly = true
 
 -- 自瞄圈 UI
@@ -723,10 +645,17 @@ GeneralSection:Toggle({
     end,
 })
 
--- 使用自定义滑块
-CreateSlider(GeneralSection, "移动速度", 16, 400, 16, function(value)
-    SetSpeedValue(value)
-end)
+-- 速度输入框
+GeneralSection:Input({
+    Title = "移动速度 (16-400)",
+    Placeholder = "输入速度",
+    Callback = function(text)
+        local num = tonumber(text)
+        if num then
+            SetSpeedValue(num)
+        end
+    end,
+})
 
 GeneralSection:Toggle({
     Title = "启用跳跃修改",
@@ -736,9 +665,17 @@ GeneralSection:Toggle({
     end,
 })
 
-CreateSlider(GeneralSection, "跳跃高度", 50, 600, 50, function(value)
-    SetJumpValue(value)
-end)
+-- 跳跃高度输入框
+GeneralSection:Input({
+    Title = "跳跃高度 (50-600)",
+    Placeholder = "输入跳跃高度",
+    Callback = function(text)
+        local num = tonumber(text)
+        if num then
+            SetJumpValue(num)
+        end
+    end,
+})
 
 GeneralSection:Toggle({
     Title = "无限跳跃",
@@ -787,13 +724,31 @@ AimSection:Toggle({
     end,
 })
 
-CreateSlider(AimSection, "自瞄圈大小", 50, 300, 100, function(value)
-    AimFOV = value
-end)
+-- 圈大小输入（0-10，映射到30-300像素）
+AimSection:Input({
+    Title = "自瞄圈大小 (0-10)",
+    Placeholder = "输入0-10",
+    Callback = function(text)
+        local num = tonumber(text)
+        if num then
+            num = math.clamp(num, 0, 10)
+            AimFOV = 30 + num * 27  -- 映射到30-300
+        end
+    end,
+})
 
-CreateSlider(AimSection, "平滑度", 1, 20, 8, function(value)
-    AimSmoothness = value
-end)
+-- 平滑度输入（0-10，映射到1-20）
+AimSection:Input({
+    Title = "平滑度 (0-10)",
+    Placeholder = "输入0-10",
+    Callback = function(text)
+        local num = tonumber(text)
+        if num then
+            num = math.clamp(num, 0, 10)
+            AimSmoothness = 1 + num * 1.9  -- 映射到1-20
+        end
+    end,
+})
 
 AimSection:Toggle({
     Title = "出掩体才锁定",
