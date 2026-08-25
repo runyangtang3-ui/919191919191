@@ -29,6 +29,84 @@ local LocalPlayer = Players.LocalPlayer
 local Camera = workspace.CurrentCamera
 local UserInputService = game:GetService("UserInputService")
 
+-- ==================== 自定义滑块模块 ====================
+local function CreateSlider(parent, title, min, max, default, callback)
+    local container = Instance.new("Frame")
+    container.Size = UDim2.new(1, -20, 0, 40)
+    container.BackgroundTransparency = 1
+    container.Parent = parent
+
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(1, 0, 0, 20)
+    label.Position = UDim2.new(0, 0, 0, 0)
+    label.BackgroundTransparency = 1
+    label.Text = title .. ": " .. tostring(default)
+    label.TextColor3 = Color3.new(1, 1, 1)
+    label.Font = Enum.Font.SourceSans
+    label.TextSize = 14
+    label.Parent = container
+
+    local bar = Instance.new("Frame")
+    bar.Size = UDim2.new(1, -10, 0, 8)
+    bar.Position = UDim2.new(0, 5, 0, 25)
+    bar.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    bar.BorderSizePixel = 0
+    Instance.new("UICorner", bar).CornerRadius = UDim.new(0, 4)
+    bar.Parent = container
+
+    local fill = Instance.new("Frame")
+    local fillWidth = (default - min) / (max - min)
+    fill.Size = UDim2.new(fillWidth, 0, 1, 0)
+    fill.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+    fill.BorderSizePixel = 0
+    Instance.new("UICorner", fill).CornerRadius = UDim.new(0, 4)
+    fill.Parent = bar
+
+    local knob = Instance.new("TextButton")
+    knob.Size = UDim2.new(0, 16, 0, 16)
+    knob.Position = UDim2.new(fillWidth, -8, 0, -4)
+    knob.BackgroundColor3 = Color3.new(1, 1, 1)
+    knob.Text = ""
+    knob.BorderSizePixel = 0
+    Instance.new("UICorner", knob).CornerRadius = UDim.new(1, 0)
+    knob.Parent = bar
+
+    local dragging = false
+    local function updateFromMouse()
+        local mouse = LocalPlayer:GetMouse()
+        local barAbs = bar.AbsolutePosition
+        local barSize = bar.AbsoluteSize
+        local relativeX = math.clamp(mouse.X - barAbs.X, 0, barSize.X)
+        local percent = relativeX / barSize.X
+        local value = min + percent * (max - min)
+        callback(value)
+        label.Text = title .. ": " .. math.floor(value)
+        fill.Size = UDim2.new(percent, 0, 1, 0)
+        knob.Position = UDim2.new(percent, -8, 0, -4)
+    end
+
+    knob.MouseButton1Down:Connect(function()
+        dragging = true
+        updateFromMouse()
+    end)
+    bar.MouseButton1Down:Connect(function()
+        dragging = true
+        updateFromMouse()
+    end)
+    UserInputService.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragging = false
+        end
+    end)
+    UserInputService.InputChanged:Connect(function(input)
+        if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement) then
+            updateFromMouse()
+        end
+    end)
+
+    return container
+end
+
 -- ==================== 变量定义 ====================
 -- 速度
 local TargetWalkSpeed = 16
@@ -542,7 +620,7 @@ end)
 local Window = WindUI:CreateWindow({
     Title = "红星中心",
     Icon = "solar:star-bold-duotone",
-    NewElements = true,
+    NewElements = false,  -- 关闭新元素，避免干扰
     HideSearchBar = true,
     Size = UDim2.fromOffset(680, 620),
     OpenButton = {
@@ -645,15 +723,10 @@ GeneralSection:Toggle({
     end,
 })
 
-GeneralSection:Slider({
-    Title = "移动速度",
-    Min = 16,
-    Max = 400,
-    Default = 16,
-    Callback = function(value)
-        SetSpeedValue(value)
-    end,
-})
+-- 使用自定义滑块
+CreateSlider(GeneralSection, "移动速度", 16, 400, 16, function(value)
+    SetSpeedValue(value)
+end)
 
 GeneralSection:Toggle({
     Title = "启用跳跃修改",
@@ -663,15 +736,9 @@ GeneralSection:Toggle({
     end,
 })
 
-GeneralSection:Slider({
-    Title = "跳跃高度",
-    Min = 50,
-    Max = 600,
-    Default = 50,
-    Callback = function(value)
-        SetJumpValue(value)
-    end,
-})
+CreateSlider(GeneralSection, "跳跃高度", 50, 600, 50, function(value)
+    SetJumpValue(value)
+end)
 
 GeneralSection:Toggle({
     Title = "无限跳跃",
@@ -720,25 +787,13 @@ AimSection:Toggle({
     end,
 })
 
-AimSection:Slider({
-    Title = "自瞄圈大小",
-    Min = 50,
-    Max = 300,
-    Default = 100,
-    Callback = function(value)
-        AimFOV = value
-    end,
-})
+CreateSlider(AimSection, "自瞄圈大小", 50, 300, 100, function(value)
+    AimFOV = value
+end)
 
-AimSection:Slider({
-    Title = "平滑度",
-    Min = 1,
-    Max = 20,
-    Default = 8,
-    Callback = function(value)
-        AimSmoothness = value
-    end,
-})
+CreateSlider(AimSection, "平滑度", 1, 20, 8, function(value)
+    AimSmoothness = value
+end)
 
 AimSection:Toggle({
     Title = "出掩体才锁定",
