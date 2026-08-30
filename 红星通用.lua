@@ -540,13 +540,13 @@ RunService.RenderStepped:Connect(function(deltaTime)
 end)
 -- ==================== 创建主窗口 ====================
 local Window = WindUI:CreateWindow({
-    Title = "红星中心",
+    Title = "🔱红星中心",
     Icon = "solar:star-bold-duotone",
     NewElements = false,  -- 关闭新元素，避免干扰
     HideSearchBar = true,
     Size = UDim2.fromOffset(680, 620),
     OpenButton = {
-        Title = "打开红星中心",
+        Title = "打开红星中心⚜️",
         CornerRadius = UDim.new(1, 0),
         StrokeThickness = 3,
         Enabled = true,
@@ -566,7 +566,7 @@ local Window = WindUI:CreateWindow({
 
 -- ==================== 主页标签页 ====================
 local MainTab = Window:Tab({
-    Title = "主页",
+    Title = "🔱主页",
     Desc = "红星中心公告",
     Icon = "solar:home-2-bold",
     IconColor = Color3.fromHex("#FF5E5E"),
@@ -575,7 +575,7 @@ local MainTab = Window:Tab({
 })
 
 local NoticeSection = MainTab:Section({
-    Title = "📢 公告",
+    Title = "🔱 公告",
 })
 
 NoticeSection:Section({
