@@ -1,4 +1,4 @@
--- 红星中心 | WindUI + Patriot 密钥系统（30卡密）
+-- 红星中心 | WindUI + Patriot 密钥系统（30卡密 · 鲜红主题）
 local RunService = game:GetService("RunService")
 local cloneref = (cloneref or clonereference or function(instance)
 	return instance
@@ -129,47 +129,70 @@ do
 	end
 end
 
--- 颜色
-local Purple = Color3.fromHex("#7775F2")
-local Yellow = Color3.fromHex("#ECA201")
-local Green = Color3.fromHex("#10C550")
+-- 鲜红主题颜色
+local Red = Color3.fromHex("#FF1A1A")
+local DarkRed = Color3.fromHex("#8B0000")
+local BrightRed = Color3.fromHex("#FF3B3B")
+local Yellow = Color3.fromHex("#FFD60A")
 local Grey = Color3.fromHex("#83889E")
+local Purple = Color3.fromHex("#7775F2")
 local Blue = Color3.fromHex("#257AF7")
-local Red = Color3.fromHex("#EF4F1D")
+local Green = Color3.fromHex("#10C550")
+
+-- 统一图标
+local UnifiedIcon = "solar:star-bold-duotone"
 
 -- 创建主窗口
 function createMainWindow()
 	local Window = WindUI:CreateWindow({
 		Title = "红星中心",
 		Folder = "RedStarHub",
-		Icon = "solar:folder-2-bold-duotone",
+		Icon = UnifiedIcon,
 		NewElements = true,
 		HideSearchBar = false,
 
+		-- 鲜红主题
+		Theme = {
+			Accent = Red,
+			AccentHover = BrightRed,
+			Background = Color3.fromHex("#1A0000"),
+			Header = Color3.fromHex("#2A0000"),
+			Input = Color3.fromHex("#3A0000"),
+			Text = Color3.fromHex("#FFFFFF"),
+			TextDim = Color3.fromHex("#D9A0A0"),
+			Success = Green,
+			Error = BrightRed,
+			Warning = Yellow,
+			StatusIdle = DarkRed,
+			Divider = Color3.fromHex("#5A0000"),
+			Pending = Color3.fromHex("#4A0000"),
+		},
+
 		OpenButton = {
 			Title = "hx 打开红星中心",
+			Icon = UnifiedIcon,
 			CornerRadius = UDim.new(1, 0),
 			StrokeThickness = 3,
 			Enabled = true,
 			Draggable = true,
 			OnlyMobile = false,
-			Scale = 0.5,
+			Scale = 1.3,
 
 			Color = ColorSequence.new(
-				Color3.fromHex("#30FF6A"),
-				Color3.fromHex("#e7ff2f")
+				Color3.fromHex("#FF1A1A"),
+				Color3.fromHex("#FF6B6B")
 			),
 		},
 		Topbar = {
 			Height = 44,
-			ButtonsType = "Mac",
+			ButtonsType = "Default",
 		},
 	})
 
 	Window:Tag({
 		Title = "v" .. WindUI.Version,
-		Icon = "github",
-		Color = Color3.fromHex("#1c1c1c"),
+		Icon = UnifiedIcon,
+		Color = DarkRed,
 		Border = true,
 	})
 
@@ -177,8 +200,8 @@ function createMainWindow()
 	local HomeTab = Window:Tab({
 		Title = "首页",
 		Desc = "欢迎使用红星中心",
-		Icon = "solar:info-square-bold",
-		IconColor = Grey,
+		Icon = UnifiedIcon,
+		IconColor = Red,
 		IconShape = "Square",
 		Border = true,
 	})
@@ -193,7 +216,7 @@ function createMainWindow()
 		FontWeight = Enum.FontWeight.SemiBold,
 	})
 
-	-- 公告：国庆倒计时
+	-- 公告：国庆倒计时（使用 Paragraph 每秒刷新）
 	HomeSection:Section({
 		Title = "公告",
 		TextSize = 18,
@@ -202,7 +225,7 @@ function createMainWindow()
 
 	local CountdownPara = HomeSection:Paragraph({
 		Title = "距离国庆节还有：计算中...",
-		Desc = "",
+		Desc = "正在获取时间...",
 		Image = "solar:calendar-bold",
 	})
 
@@ -210,7 +233,6 @@ function createMainWindow()
 		local function getTarget()
 			local now = os.time()
 			local year = tonumber(os.date("%Y", now))
-			-- 北京时间 10月1日 00:00 = UTC 9月30日 16:00
 			local target = os.time({year = year, month = 9, day = 30, hour = 16, min = 0, sec = 0})
 			if now >= target then
 				target = os.time({year = year + 1, month = 9, day = 30, hour = 16, min = 0, sec = 0})
@@ -229,9 +251,12 @@ function createMainWindow()
 			local hours = math.floor((diff % 86400) / 3600)
 			local minutes = math.floor((diff % 3600) / 60)
 			local seconds = diff % 60
-			CountdownPara:Set({
-				Title = string.format("距离国庆节还有：%d天 %d小时 %d分钟 %d秒", days, hours, minutes, seconds)
-			})
+			pcall(function()
+				CountdownPara:Set({
+					Title = string.format("距离国庆节还有：%d天 %d小时 %d分钟 %d秒", days, hours, minutes, seconds),
+					Desc = "倒计时每秒更新",
+				})
+			end)
 			task.wait(1)
 		end
 	end)
@@ -240,8 +265,8 @@ function createMainWindow()
 	local ServerTab = Window:Tab({
 		Title = "服务器",
 		Desc = "服务器功能",
-		Icon = "solar:folder-2-bold-duotone",
-		IconColor = Grey,
+		Icon = UnifiedIcon,
+		IconColor = Red,
 		IconShape = "Square",
 		Border = true,
 	})
@@ -282,8 +307,8 @@ function createMainWindow()
 	local SupportServerTab = Window:Tab({
 		Title = "支持服务器",
 		Desc = "支持的服务器脚本",
-		Icon = "solar:folder-2-bold-duotone",
-		IconColor = Grey,
+		Icon = UnifiedIcon,
+		IconColor = Red,
 		IconShape = "Square",
 		Border = true,
 	})
@@ -374,7 +399,7 @@ function createMainWindow()
 	})
 end
 
--- Patriot 配置
+-- Patriot 配置（鲜红主题）
 Patriot.Appearance = {
 	Title = "红星中心密钥系统",
 	Subtitle = "请输入密钥",
@@ -400,21 +425,21 @@ Patriot.Options = {
 }
 
 Patriot.Theme = {
-	Accent = Color3.fromRGB(255, 0, 0),
-	AccentHover = Color3.fromRGB(255, 50, 50),
-	Background = Color3.fromRGB(20, 0, 0),
-	Header = Color3.fromRGB(30, 0, 0),
-	Input = Color3.fromRGB(40, 0, 0),
+	Accent = Color3.fromRGB(255, 26, 26),
+	AccentHover = Color3.fromRGB(255, 80, 80),
+	Background = Color3.fromRGB(26, 0, 0),
+	Header = Color3.fromRGB(42, 0, 0),
+	Input = Color3.fromRGB(58, 0, 0),
 	Text = Color3.fromRGB(255, 255, 255),
-	TextDim = Color3.fromRGB(200, 150, 150),
-	Success = Color3.fromRGB(50, 255, 50),
-	Error = Color3.fromRGB(255, 60, 60),
-	Warning = Color3.fromRGB(255, 200, 50),
-	StatusIdle = Color3.fromRGB(180, 50, 50),
-	Discord = Color3.fromRGB(255, 0, 0),
-	DiscordHover = Color3.fromRGB(255, 50, 50),
-	Divider = Color3.fromRGB(60, 0, 0),
-	Pending = Color3.fromRGB(50, 0, 0)
+	TextDim = Color3.fromRGB(217, 160, 160),
+	Success = Color3.fromRGB(16, 197, 80),
+	Error = Color3.fromRGB(255, 59, 59),
+	Warning = Color3.fromRGB(255, 214, 10),
+	StatusIdle = Color3.fromRGB(139, 0, 0),
+	Discord = Color3.fromRGB(255, 26, 26),
+	DiscordHover = Color3.fromRGB(255, 80, 80),
+	Divider = Color3.fromRGB(90, 0, 0),
+	Pending = Color3.fromRGB(74, 0, 0)
 }
 
 Patriot.Changelog = {}
